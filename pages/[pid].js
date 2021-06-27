@@ -3,6 +3,11 @@ import path from 'path';
 import fs from 'fs/promises';
 
 function ProjectDetailPage({ loadedProduct }) {
+  // If fallback: true, below code has to be un-commented
+  // if (!loadedProduct) {
+  //   return <p>Loading...</p>;
+  // }
+
   return (
     <Fragment>
       <h1>{loadedProduct.title}</h1>
@@ -32,12 +37,8 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
   return {
-    paths: [
-      { params: { pid: 'p1' } },
-      { params: { pid: 'p2' } },
-      { params: { pid: 'p3' } },
-    ],
-    fallback: false,
+    paths: [{ params: { pid: 'p1' } }],
+    fallback: 'blocking',
   };
 }
 
