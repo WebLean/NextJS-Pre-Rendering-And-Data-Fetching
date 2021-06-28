@@ -4,9 +4,9 @@ import fs from 'fs/promises';
 
 function ProjectDetailPage({ loadedProduct }) {
   // If fallback: true, below code has to be un-commented
-  // if (!loadedProduct) {
-  //   return <p>Loading...</p>;
-  // }
+  if (!loadedProduct) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <Fragment>
@@ -34,6 +34,10 @@ export async function getStaticProps(context) {
 
   const product = data.products.find(product => product.id === productId);
 
+  if (!product) {
+    return { notFound: true };
+  }
+
   return {
     props: {
       loadedProduct: product,
@@ -49,7 +53,7 @@ export async function getStaticPaths() {
 
   return {
     paths: pathWithParams,
-    fallback: 'blocking',
+    fallback: true,
   };
 }
 
